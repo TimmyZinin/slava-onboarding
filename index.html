@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Onboarding — Подготовка к встрече с Тимом</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2/dist/lottie-player.js"></script>
+
+    <style>
+        /* ================================================================
+           DESIGN TOKENS — Warm Editorial Palette
+           cream / sand / terracotta / forest green
+           NO dark. NO blue. NO purple. EVER.
+        ================================================================ */
+        :root {
+            --cream:        #faf8f3;
+            --cream-deep:   #f4f0e8;
+            --sand:         #e8e0d0;
+            --sand-light:   #f0ebe0;
+            --parchment:    #ede5d4;
+            --paper:        #ffffff;
+
+            --amber:        #d97706;
+            --amber-light:  #f59e0b;
+            --amber-pale:   #fef3c7;
+            --amber-glow:   rgba(217,119,6,0.12);
+            --amber-border: #fcd34d;
+
+            --terra:        #c2410c;
+            --terra-light:  #ea580c;
+            --terra-pale:   #fff7ed;
+            --terra-glow:   rgba(194,65,12,0.1);
+            --terra-border: #fdba74;
+
+            --forest:       #2d6a4f;
+            --forest-light: #40916c;
+            --forest-pale:  #d8f3dc;
+            --forest-glow:  rgba(45,106,79,0.1);
+            --forest-border:#74c69d;
+
+            --ink:          #1c1a17;
+            --ink-80:       #2e2b26;
+            --text:         #3d3830;
+            --text-2:       #6b6358;
+            --text-3:       #9c9185;
+            --text-4:       #c4bdb3;
+
+            --border:       #ddd5c8;
+            --border-light: #e8e2d8;
+            --divider:      #ede8e2;
+
+            --shadow-warm:  0 2px 8px rgba(28,26,23,0.06), 0 1px 3px rgba(28,26,23,0.04);
+            --shadow-md:    0 8px 32px rgba(28,26,23,0.09), 0 2px 8px rgba(28,26,23,0.05);
+            --shadow-lg:    0 20px 60px rgba(28,26,23,0.12), 0 6px 20px rgba(28,26,23,0.07);
+            --shadow-hover: 0 24px 72px rgba(28,26,23,0.16), 0 8px 24px rgba(28,26,23,0.09);
+
+            --r:    16px;
+            --r-sm: 10px;
+            --r-xs: 6px;
+            --r-pill: 100px;
+
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ================================================================
+           RESET & BASE
+        ================================================================ */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.65;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ================================================================
+           ANIMATED BACKGROUND MESH
+        ================================================================ */
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-mesh::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 15% -5%, rgba(217,119,6,0.07) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 50% at 85% 95%, rgba(194,65,12,0.05) 0%, transparent 55%),
+                radial-gradient(ellipse 60% 40% at 50% 50%, rgba(45,106,79,0.03) 0%, transparent 65%);
+        }
+
+        .mesh-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.45;
+        }
+
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(245,158,11,0.18) 0%, transparent 70%);
+            top: -200px; left: -150px;
+            animation: orbFloat1 22s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(234,88,12,0.12) 0%, transparent 70%);
+            bottom: -100px; right: -150px;
+            animation: orbFloat2 28s ease-in-out infinite;
+        }
+        .orb-3 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(64,145,108,0.1) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbFloat3 35s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33%      { transform: translate(60px,40px) scale(1.08); }
+            66%      { transform: translate(-30px,20px) scale(0.95); }
+        }
+        @keyframes orbFloat2 {
+            0%,100% { transform: translate(0,0) scale(1); }
+            40%      { transform: translate(-50px,-30px) scale(1.1); }
+            70%      { transform: translate(30px,50px) scale(0.92); }
+        }
+        @keyframes orbFloat3 {
+            0%,100% { transform: translate(-50%,-50%) scale(1); }
+            50%      { transform: translate(-48%,-52%) scale(1.12); }
+        }
+
+        /* Grain texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ================================================================
+           LAYOUT
+        ================================================================ */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ================================================================
+           HERO — Asymmetric editorial layout
+        ================================================================ */
+        .hero {
+            padding: 80px 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 8px;
+            background: var(--amber-pale);
+            border: 1px solid var(--amber-border);
+            border-radius: var(--r-pill);
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--amber);
+            width: fit-content;
+            animation: slideUp 0.7s var(--smooth) 0.1s both;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--amber);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); box-shadow: 0 0 0 0 rgba(217,119,6,0.4); }
+            50%      { opacity:0.7; transform:scale(0.8); box-shadow: 0 0 0 6px rgba(217,119,6,0); }
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(40px, 6vw, 62px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+            animation: slideUp 0.7s var(--smooth) 0.2s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        .hero h1 .line-accent {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .line-accent::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--terra), var(--amber));
+            border-radius: 2px;
+            animation: lineGrow 0.8s var(--smooth) 0.9s both;
+            transform-origin: left;
+        }
+
+        @keyframes lineGrow {
+            from { transform: scaleX(0); }
+            to   { transform: scaleX(1); }
+        }
+
+        .hero-desc {
+            font-size: 16.5px;
+            color: var(--text-2);
+            line-height: 1.75;
+            max-width: 440px;
+            animation: slideUp 0.7s var(--smooth) 0.35s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 28px;
+            padding-top: 8px;
+            animation: slideUp 0.7s var(--smooth) 0.5s both;
+        }
+
+        .hero-stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-num {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--amber);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-3);
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: var(--border);
+            align-self: stretch;
+        }
+
+        /* Hero terminal illustration */
+        .hero-right {
+            animation: slideUp 0.9s var(--smooth) 0.3s both;
+            position: relative;
+        }
+
+        .hero-terminal {
+            background: var(--ink-80);
+            border-radius: var(--r);
+            padding: 0;
+            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.06);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .terminal-titlebar {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .t-dot { width:11px; height:11px; border-radius:50%; }
+        .t-dot-r { background: #ff5f57; }
+        .t-dot-y { background: #ffbd2e; }
+        .t-dot-g { background: #28c840; }
+
+        .terminal-title {
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            margin-left: 6px;
+        }
+
+        .terminal-body {
+            padding: 20px 22px 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .t-line { display: block; }
+        .t-prompt { color: rgba(245,158,11,0.7); user-select: none; }
+        .t-cmd    { color: #74c69d; }
+        .t-dim    { color: rgba(255,255,255,0.3); }
+        .t-out    { color: rgba(255,255,255,0.5); font-size: 11px; }
+        .t-success { color: #74c69d; }
+
+        /* Typing cursor animation */
+        .t-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background: var(--amber-light);
+            vertical-align: middle;
+            margin-left: 1px;
+            animation: blink 1.1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50%      { opacity: 0; }
+        }
+
+        /* Floating deco on hero-right */
+        .hero-deco {
+            position: absolute;
+            top: -24px;
+            right: -24px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px dashed var(--amber-border);
+            animation: spinSlow 30s linear infinite;
+            opacity: 0.5;
+        }
+
+        .hero-deco::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--amber-light);
+            opacity: 0.7;
+        }
+
+        @keyframes spinSlow { to { transform: rotate(360deg); } }
+
+        /* Floating bottom-left tag on terminal */
+        .terminal-tag {
+            position: absolute;
+            bottom: -16px;
+            left: 24px;
+            background: var(--terra-pale);
+            border: 1px solid var(--terra-border);
+            border-radius: var(--r-pill);
+            padding: 6px 14px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--terra);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: var(--shadow-warm);
+            animation: floatTag 4s ease-in-out infinite;
+        }
+
+        @keyframes floatTag {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-5px); }
+        }
+
+        @keyframes slideUp {
+            from { opacity:0; transform: translateY(22px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
+
+        /* ================================================================
+           TAB NAVIGATION — full-width pill switcher
+        ================================================================ */
+        .tab-nav-wrap {
+            position: sticky;
+            top: 16px;
+            z-index: 50;
+            padding: 0;
+            margin-bottom: 44px;
+            animation: slideUp 0.7s var(--smooth) 0.6s both;
+        }
+
+        .tab-nav {
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(232,224,208,0.9);
+            border-radius: var(--r-pill);
+            padding: 5px;
+            display: flex;
+            gap: 3px;
+            box-shadow: var(--shadow-md), 0 0 0 1px rgba(255,255,255,0.5) inset;
+        }
+
+        .tab-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 16px;
+            background: transparent;
+            border: none;
+            border-radius: var(--r-pill);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-3);
+            cursor: pointer;
+            transition: all 0.3s var(--smooth);
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--text-2);
+            background: rgba(0,0,0,0.03);
+        }
+
+        .tab-btn.active {
+            background: var(--ink);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(28,26,23,0.25);
+        }
+
+        .tab-icon-wrap {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .tab-btn:not(.active) .tab-icon-wrap {
+            background: transparent;
+        }
+
+        /* ================================================================
+           SECTION TRANSITIONS
+        ================================================================ */
+        .section { display: none; }
+
+        .section.active {
+            display: block;
+            animation: sectionIn 0.5s var(--smooth) both;
+        }
+
+        @keyframes sectionIn {
+            from { opacity:0; transform: translateY(24px) scale(0.99); }
+            to   { opacity:1; transform: translateY(0) scale(1); }
+        }
+
+        /* Section eyebrow label */
+        .section-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .eyebrow-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 13px;
+            border-radius: var(--r-pill);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .eyebrow-pill.amber { background:var(--amber-pale); color:var(--amber); border:1px solid var(--amber-border); }
+        .eyebrow-pill.terra { background:var(--terra-pale); color:var(--terra); border:1px solid var(--terra-border); }
+        .eyebrow-pill.forest { background:var(--forest-pale); color:var(--forest); border:1px solid var(--forest-border); }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--text-2);
+            margin-top: 4px;
+        }
+
+        /* ================================================================
+           BENTO GRID SYSTEM
+        ================================================================ */
+        .bento {
+            display: grid;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .bento-2 { grid-template-columns: 1fr 1fr; }
+        .bento-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .bento-1-2 { grid-template-columns: 1fr 1.5fr; }
+        .bento-2-1 { grid-template-columns: 1.5fr 1fr; }
+
+        /* ================================================================
+           CARDS — 5 distinct personalities
+        ================================================================ */
+        .card {
+            background: var(--paper);
+            border: 1px solid var(--border-light);
+            border-radius: var(--r);
+            padding: 28px 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-warm);
+            transition: transform 0.4s var(--smooth), box-shadow 0.4s var(--smooth), border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--amber-border);
+        }
+
+        /* Warm gradient surface */
+        .card-warm {
+            background: linear-gradient(150deg, #fffbf4 0%, #fdf7ec 100%);
+            border-color: var(--amber-border);
+        }
+        .card-warm:hover { border-color: var(--amber); }
+
+        /* Forest / sage surface */
+        .card-forest {
+            background: linear-gradient(150deg, #f4fbf7 0%, #ecf8f2 100%);
+            border-color: var(--forest-border);
+        }
+        .card-forest:hover { border-color: var(--forest); }
+
+        /* Terracotta surface */
+        .card-terra {
+            background: linear-gradient(150deg, #fff8f5 0%, #fef2ec 100%);
+            border-color: var(--terra-border);
+        }
+        .card-terra:hover { border-color: var(--terra); }
+
+        /* Dark editorial surface */
+        .card-ink {
+            background: var(--ink);
+            border-color: transparent;
+            color: rgba(255,255,255,0.9);
+        }
+        .card-ink:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: rgba(255,255,255,0.1); }
+        .card-ink h3,
+        .card-ink h4 { color: #fff; }
+        .card-ink p  { color: rgba(255,255,255,0.6); }
+
+        /* Full-bleed sand surface */
+        .card-sand {
+            background: var(--cream-deep);
+            border-color: var(--border);
+        }
+
+        /* Left accent bar */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 16px; bottom: 16px; left: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--amber-light), var(--terra));
+            border-radius: 0 3px 3px 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s var(--smooth);
+        }
+
+        .card:hover::before { transform: scaleY(1); }
+
+        .card-forest::before { background: linear-gradient(180deg, var(--forest-light), var(--forest)); }
+        .card-terra::before  { background: linear-gradient(180deg, var(--terra-light), var(--terra)); }
+        .card-ink::before    { background: linear-gradient(180deg, var(--amber-light), var(--amber)); }
+
+        /* Card type: wide (spans full width) */
+        .card-wide { grid-column: 1 / -1; }
+
+        /* ================================================================
+           STEP HEADER SYSTEM
+        ================================================================ */
+        .step-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .step-num.amber  { background: var(--amber-pale); color: var(--amber); border: 1.5px solid var(--amber-border); }
+        .step-num.forest { background: var(--forest-pale); color: var(--forest); border: 1.5px solid var(--forest-border); }
+        .step-num.terra  { background: var(--terra-pale); color: var(--terra); border: 1.5px solid var(--terra-border); }
+        .step-num.white  { background: rgba(255,255,255,0.12); color: #fff; border: 1.5px solid rgba(255,255,255,0.15); }
+
+        .step-head-text h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            line-height: 1.25;
+        }
+        .card-ink .step-head-text h3 { color: #fff; }
+
+        .step-head-text p {
+            font-size: 13px;
+            color: var(--text-3);
+            margin-top: 2px;
+        }
+        .card-ink .step-head-text p { color: rgba(255,255,255,0.4); }
+
+        .card p {
+            font-size: 14.5px;
+            color: var(--text-2);
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .card p:last-child { margin-bottom: 0; }
+
+        .card h4 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 16px 0 6px;
+        }
+
+        /* ================================================================
+           HIGHLIGHT CALLOUTS
+        ================================================================ */
+        .callout {
+            border-radius: var(--r-sm);
+            padding: 16px 18px;
+            margin: 14px 0;
+        }
+
+        .callout-amber {
+            background: var(--amber-pale);
+            border: 1px solid var(--amber-border);
+        }
+        .callout-amber .callout-title { color: var(--amber); }
+
+        .callout-forest {
+            background: var(--forest-pale);
+            border: 1px solid var(--forest-border);
+        }
+        .callout-forest .callout-title { color: var(--forest); }
+
+        .callout-terra {
+            background: var(--terra-pale);
+            border: 1px solid var(--terra-border);
+        }
+        .callout-terra .callout-title { color: var(--terra); }
+
+        .callout-icon { font-size: 18px; margin-bottom: 6px; display: block; }
+
+        .callout-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .callout p {
+            font-size: 13px !important;
+            line-height: 1.65 !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* ================================================================
+           CODE BLOCKS — warm light terminal
+        ================================================================ */
+        .code-wrap {
+            position: relative;
+            margin: 14px 0;
+            border-radius: var(--r-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-warm);
+        }
+
+        .code-titlebar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 14px;
+            background: #2a2723;
+        }
+
+        .code-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .cd-r { background: #ff5f57; }
+        .cd-y { background: #ffbd2e; }
+        .cd-g { background: #28c840; }
+
+        .code-file {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: rgba(255,255,255,0.25);
+            margin-left: 6px;
+        }
+
+        .code-block {
+            background: #1e1c19;
+            padding: 18px 22px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.82);
+            overflow-x: auto;
+        }
+
+        /* Typing animation variant */
+        .code-block.typing-anim .typed-line {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typeIn 0.6s steps(40, end) both;
+        }
+
+        .code-block.typing-anim .typed-line:nth-child(1) { animation-delay: 0.3s; }
+        .code-block.typing-anim .typed-line:nth-child(2) { animation-delay: 1.0s; }
+        .code-block.typing-anim .typed-line:nth-child(3) { animation-delay: 1.7s; }
+        .code-block.typing-anim .typed-line:nth-child(4) { animation-delay: 2.4s; }
+        .code-block.typing-anim .typed-line:nth-child(5) { animation-delay: 2.9s; }
+        .code-block.typing-anim .typed-line:nth-child(6) { animation-delay: 3.6s; }
+
+        @keyframes typeIn {
+            from { width: 0; opacity: 0; }
+            1%   { opacity: 1; }
+            to   { width: 100%; opacity: 1; }
+        }
+
+        .sy-comment { color: rgba(255,255,255,0.28); font-style: italic; }
+        .sy-cmd     { color: #74c69d; font-weight: 500; }
+        .sy-flag    { color: #fca38a; }
+        .sy-url     { color: #fcd34d; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
+        .sy-str     { color: #f9a87a; }
+        .sy-prompt  { color: rgba(255,255,255,0.2); user-select: none; }
+        .sy-out     { color: rgba(255,255,255,0.38); font-size: 12px; }
+        .sy-ok      { color: #74c69d; }
+
+        .copy-btn {
+            position: absolute;
+            top: 9px;
+            right: 9px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--r-xs);
+            color: rgba(255,255,255,0.4);
+            padding: 4px 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .copy-btn:hover {
+            background: rgba(245,158,11,0.15);
+            border-color: rgba(245,158,11,0.4);
+            color: var(--amber-light);
+        }
+
+        .copy-btn.copied {
+            background: rgba(116,198,157,0.15);
+            border-color: rgba(116,198,157,0.4);
+            color: #74c69d;
+        }
+
+        /* ================================================================
+           BUDGET BENTO GRID
+        ================================================================ */
+        .budget-bento {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .budget-tile {
+            border-radius: var(--r-sm);
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s var(--smooth), box-shadow 0.3s var(--smooth);
+        }
+
+        .budget-tile:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .budget-tile.primary {
+            background: var(--ink);
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .budget-tile.amber-bg {
+            background: var(--amber-pale);
+            border: 1px solid var(--amber-border);
+        }
+        .budget-tile.terra-bg {
+            background: var(--terra-pale);
+            border: 1px solid var(--terra-border);
+        }
+        .budget-tile.forest-bg {
+            background: var(--forest-pale);
+            border: 1px solid var(--forest-border);
+        }
+        .budget-tile.sand-bg {
+            background: var(--cream-deep);
+            border: 1px solid var(--border);
+        }
+
+        .budget-amount {
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .budget-tile.primary .budget-amount { color: var(--amber-light); font-size: 44px; }
+        .budget-tile.amber-bg .budget-amount { color: var(--amber); }
+        .budget-tile.terra-bg .budget-amount { color: var(--terra); }
+        .budget-tile.forest-bg .budget-amount { color: var(--forest); }
+        .budget-tile.sand-bg .budget-amount { color: var(--text); }
+
+        .budget-label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-2);
+            line-height: 1.4;
+        }
+
+        .budget-tile.primary .budget-label { color: rgba(255,255,255,0.5); }
+
+        .budget-tile.primary .budget-badge {
+            background: rgba(245,158,11,0.15);
+            border: 1px solid rgba(245,158,11,0.3);
+            padding: 6px 14px;
+            border-radius: var(--r-pill);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--amber-light);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Counter animation */
+        .budget-amount[data-target] { cursor: default; }
+
+        /* ================================================================
+           STACK TABLE — enhanced
+        ================================================================ */
+        .stack-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+            margin: 8px 0;
+        }
+
+        .stack-table thead tr th {
+            padding: 8px 14px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-3);
+            text-align: left;
+        }
+
+        .stack-table tbody tr {
+            background: var(--paper);
+            transition: background 0.2s, transform 0.2s;
+            animation: tableRowIn 0.4s var(--smooth) both;
+        }
+
+        .stack-table tbody tr:hover {
+            background: var(--amber-pale);
+            transform: scale(1.01);
+        }
+
+        @keyframes tableRowIn {
+            from { opacity:0; transform: translateX(-8px); }
+            to   { opacity:1; transform: translateX(0); }
+        }
+
+        .stack-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        .stack-table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+        .stack-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+        .stack-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+        .stack-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+        .stack-table td {
+            padding: 13px 14px;
+            font-size: 13.5px;
+            color: var(--text-2);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .stack-table td:first-child {
+            border-radius: var(--r-sm) 0 0 var(--r-sm);
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .stack-table td:last-child {
+            border-radius: 0 var(--r-sm) var(--r-sm) 0;
+            color: var(--forest);
+            font-weight: 600;
+        }
+
+        /* Tool icon pill */
+        .tool-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .tool-emoji {
+            font-size: 16px;
+        }
+
+        /* ================================================================
+           CHECKLIST — interactive with confetti
+        ================================================================ */
+        .checklist { list-style: none; padding: 0; margin-top: 8px; }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--divider);
+            cursor: pointer;
+            border-radius: var(--r-xs);
+            transition: all 0.2s;
+        }
+
+        .checklist li:first-child { padding-top: 6px; }
+        .checklist li:last-child  { border-bottom: none; padding-bottom: 4px; }
+
+        .checklist li:hover {
+            padding-left: 8px;
+            padding-right: 8px;
+            margin-left: -8px;
+            margin-right: -8px;
+            background: var(--cream-deep);
+        }
+
+        .chk-box {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            margin-top: 1px;
+            transition: all 0.25s var(--spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--paper);
+            position: relative;
+        }
+
+        .checklist li:hover .chk-box { border-color: var(--amber); }
+
+        .chk-box.checked {
+            background: var(--forest);
+            border-color: var(--forest);
+            animation: checkBounce 0.4s var(--spring);
+        }
+
+        @keyframes checkBounce {
+            0%  { transform: scale(1); }
+            40% { transform: scale(1.4) rotate(10deg); }
+            70% { transform: scale(0.88) rotate(-5deg); }
+            100%{ transform: scale(1) rotate(0); }
+        }
+
+        .chk-box.checked::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: 2.5px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translate(-1px,-1px);
+        }
+
+        .chk-label { flex: 1; }
+
+        .chk-label .lbl {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.4;
+            transition: all 0.2s;
+        }
+
+        .chk-label .sub {
+            font-size: 12.5px;
+            color: var(--text-3);
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+
+        .checklist li.done .lbl {
+            color: var(--text-3);
+            text-decoration: line-through;
+            text-decoration-thickness: 1.5px;
+        }
+
+        /* Pre-checked (deliverable items) */
+        .chk-box.pre-checked {
+            background: var(--amber);
+            border-color: var(--amber);
+        }
+        .chk-box.pre-checked::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: 2.5px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translate(-1px,-1px);
+        }
+
+        /* ================================================================
+           PROGRESS BAR
+        ================================================================ */
+        .prog-wrap {
+            margin: 14px 0 6px;
+        }
+
+        .prog-track {
+            height: 5px;
+            background: var(--cream-deep);
+            border-radius: var(--r-pill);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--forest-light), var(--forest));
+            border-radius: var(--r-pill);
+            transition: width 0.5s var(--smooth);
+            position: relative;
+        }
+
+        .prog-fill::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%,100% { opacity: 0; }
+            50%      { opacity: 1; }
+        }
+
+        .prog-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-3);
+            margin-top: 7px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prog-pct {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--forest);
+            letter-spacing: -0.02em;
+        }
+
+        /* ================================================================
+           TAGS & BADGES
+        ================================================================ */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: var(--r-pill);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .tag-amber  { background:var(--amber-pale);  color:var(--amber);  border:1px solid var(--amber-border); }
+        .tag-forest { background:var(--forest-pale); color:var(--forest); border:1px solid var(--forest-border); }
+        .tag-terra  { background:var(--terra-pale);  color:var(--terra);  border:1px solid var(--terra-border); }
+        .tag-sand   { background:var(--cream-deep);  color:var(--text-2); border:1px solid var(--border); }
+
+        /* ================================================================
+           MCP TABLE
+        ================================================================ */
+        .mcp-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 10px 0;
+        }
+
+        .mcp-table thead tr {
+            background: var(--cream-deep);
+        }
+
+        .mcp-table th {
+            padding: 9px 14px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-3);
+            text-align: left;
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        .mcp-table th:first-child { border-radius: var(--r-xs) 0 0 0; }
+        .mcp-table th:last-child  { border-radius: 0 var(--r-xs) 0 0; }
+
+        .mcp-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--divider);
+            font-size: 13.5px;
+            color: var(--text-2);
+            vertical-align: middle;
+        }
+
+        .mcp-table tr:last-child td { border-bottom: none; }
+        .mcp-table tr:hover td { background: var(--cream-deep); }
+        .mcp-table .tool-name { font-weight: 700; color: var(--ink); white-space: nowrap; }
+
+        /* ================================================================
+           SCROLL REVEAL
+        ================================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.55s var(--smooth), transform 0.55s var(--smooth);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-group > * {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s var(--smooth), transform 0.45s var(--smooth);
+        }
+
+        .reveal-group.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0ms; }
+        .reveal-group.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:80ms; }
+        .reveal-group.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:160ms; }
+        .reveal-group.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:240ms; }
+        .reveal-group.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:320ms; }
+
+        /* ================================================================
+           DECORATIVE SECTION BREAK
+        ================================================================ */
+        .section-break {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 36px 0;
+            color: var(--text-4);
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .section-break::before,
+        .section-break::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--divider);
+        }
+
+        /* ================================================================
+           AGENDA TIMELINE
+        ================================================================ */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 10px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 44px;
+            bottom: 0;
+            width: 1.5px;
+            background: var(--divider);
+        }
+
+        .timeline-dot {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--amber-pale);
+            border: 1.5px solid var(--amber-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            margin-top: 2px;
+            transition: all 0.3s var(--spring);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: var(--amber);
+            transform: scale(1.15);
+        }
+
+        .timeline-content .tl-title {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .timeline-content .tl-desc {
+            font-size: 12.5px;
+            color: var(--text-3);
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+
+        /* ================================================================
+           ROADMAP WEEKS
+        ================================================================ */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .roadmap-week {
+            border-radius: var(--r-sm);
+            padding: 18px 20px;
+            border: 1.5px solid var(--border);
+            background: var(--paper);
+            transition: all 0.3s var(--smooth);
+        }
+
+        .roadmap-week:hover {
+            border-color: var(--amber-border);
+            background: var(--amber-pale);
+            transform: translateY(-2px);
+        }
+
+        .week-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-4);
+            margin-bottom: 10px;
+        }
+
+        .week-task {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-2);
+        }
+
+        .week-task::before {
+            content: '';
+            flex-shrink: 0;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--amber);
+            margin-top: 6px;
+        }
+
+        /* ================================================================
+           DELIVERABLES GRID
+        ================================================================ */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .dlv-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: var(--r-sm);
+            background: var(--paper);
+            border: 1px solid var(--border);
+            transition: all 0.25s var(--smooth);
+        }
+
+        .dlv-item:hover {
+            border-color: var(--amber-border);
+            background: var(--amber-pale);
+            transform: translateX(4px);
+        }
+
+        .dlv-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--forest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .dlv-check::after {
+            content: '';
+            width: 5px;
+            height: 8px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translate(-0.5px, -1px);
+        }
+
+        .dlv-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        /* ================================================================
+           LINKS
+        ================================================================ */
+        a {
+            color: var(--amber);
+            text-decoration: underline;
+            text-decoration-color: var(--amber-border);
+            text-underline-offset: 2px;
+            transition: all 0.2s;
+        }
+        a:hover { color: var(--terra); text-decoration-color: var(--terra-border); }
+
+        /* ================================================================
+           FOOTER
+        ================================================================ */
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: var(--text-3);
+            font-size: 13px;
+            border-top: 1px solid var(--divider);
+            margin-top: 28px;
+            position: relative;
+        }
+
+        .footer-brand {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .footer a { color: var(--amber); text-decoration: none; }
+        .footer a:hover { color: var(--terra); }
+
+        /* ================================================================
+           CONFETTI CANVAS
+        ================================================================ */
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ================================================================
+           RESPONSIVE
+        ================================================================ */
+        @media (max-width: 700px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 52px 0 40px;
+            }
+            .hero-right { display: none; }
+            .hero h1 { font-size: 36px; }
+            .bento-2, .bento-1-2, .bento-2-1 { grid-template-columns: 1fr; }
+            .budget-bento { grid-template-columns: 1fr; }
+            .budget-tile.primary { grid-column: span 1; }
+            .roadmap-grid { grid-template-columns: 1fr; }
+            .deliverables-grid { grid-template-columns: 1fr; }
+            .card { padding: 22px 20px; }
+            .tab-btn .tab-label { display: none; }
+            .tab-btn { padding: 11px 10px; }
+            .hero-stats { gap: 18px; }
+        }
+
+        /* ================================================================
+           LOTTIE OVERRIDES
+        ================================================================ */
+        lottie-player {
+            display: block;
+        }
+
+        /* ================================================================
+           SPARKLE / PULSE ON STEP NUMS
+        ================================================================ */
+        @keyframes stepPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(217,119,6,0); }
+            50%      { box-shadow: 0 0 0 6px rgba(217,119,6,0.12); }
+        }
+
+        .step-num.amber { animation: stepPulse 3s ease-in-out infinite; }
+
+        /* ================================================================
+           CODE INLINE
+        ================================================================ */
+        code {
+            background: var(--cream-deep);
+            border: 1px solid var(--border);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--terra);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="bg-mesh">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+</div>
+
+<!-- Confetti canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<div class="container">
+
+    <!-- ================================================================
+         HERO
+    ================================================================ -->
+    <header class="hero">
+        <div class="hero-left">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                AI Onboarding · Claude Code
+            </div>
+
+            <h1>
+                Подготовка<br>
+                к встрече<br>
+                с <em><span class="line-accent">Тимом</span></em>
+            </h1>
+
+            <p class="hero-desc">
+                Персональная инструкция по настройке AI-инструментов.
+                Все шаги разбиты на три этапа — до, во время и после встречи.
+            </p>
+
+            <div class="hero-stats">
+                <div class="hero-stat-item">
+                    <div class="stat-num">20–30</div>
+                    <div class="stat-label">минут<br>на подготовку</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="hero-stat-item">
+                    <div class="stat-num">3</div>
+                    <div class="stat-label">этапа<br>онбординга</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="hero-stat-item">
+                    <div class="stat-num">∞</div>
+                    <div class="stat-label">автоматизаций<br>в результате</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-deco"></div>
+            <div class="hero-terminal">
+                <div class="terminal-titlebar">
+                    <div class="t-dot t-dot-r"></div>
+                    <div class="t-dot t-dot-y"></div>
+                    <div class="t-dot t-dot-g"></div>
+                    <span class="terminal-title">claude — AI Agent</span>
+                </div>
+                <div class="terminal-body">
+                    <span class="t-line"><span class="t-prompt">$ </span><span class="t-cmd" id="hero-cmd"></span><span class="t-cursor" id="hero-cursor"></span></span>
+                    <span class="t-line t-dim" id="hero-out1" style="opacity:0"></span>
+                    <span class="t-line t-dim" id="hero-out2" style="opacity:0"></span>
+                    <span class="t-line" style="margin-top:4px; opacity:0;" id="hero-out3">
+                        <span class="t-success">✓ </span><span class="t-out">Claude Code ready.</span>
+                    </span>
+                    <span class="t-line" style="margin-top:2px; opacity:0;" id="hero-out4">
+                        <span class="t-success">✓ </span><span class="t-out">MCP servers: 3 active</span>
+                    </span>
+                    <span class="t-line" style="margin-top:2px; opacity:0;" id="hero-out5">
+                        <span class="t-success">✓ </span><span class="t-out">ClickUp, Telegram, Browser</span>
+                    </span>
+                    <span class="t-line" style="margin-top:8px; opacity:0;" id="hero-out6">
+                        <span class="t-prompt">claude &gt; </span><span class="t-out" id="hero-prompt-out"></span><span class="t-cursor" id="hero-cursor2"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="terminal-tag">
+                <span>⚡</span> Реальный терминальный агент
+            </div>
+        </div>
+    </header>
+
+    <!-- ================================================================
+         TAB NAVIGATION
+    ================================================================ -->
+    <div class="tab-nav-wrap">
+        <nav class="tab-nav" role="tablist">
+            <button class="tab-btn active" role="tab" onclick="showSection('before', this)" aria-selected="true">
+                <div class="tab-icon-wrap">🗓</div>
+                <span class="tab-label">До встречи</span>
+            </button>
+            <button class="tab-btn" role="tab" onclick="showSection('during', this)" aria-selected="false">
+                <div class="tab-icon-wrap">⚡</div>
+                <span class="tab-label">Во время</span>
+            </button>
+            <button class="tab-btn" role="tab" onclick="showSection('after', this)" aria-selected="false">
+                <div class="tab-icon-wrap">🚀</div>
+                <span class="tab-label">После</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ================================================================
+         SECTION 1: BEFORE
+    ================================================================ -->
+    <div id="before" class="section active" role="tabpanel">
+
+        <div class="section-eyebrow reveal">
+            <div>
+                <div class="eyebrow-pill amber">Этап 1 · До встречи</div>
+                <div class="section-title" style="margin-top:8px;">Подготовь рабочее место</div>
+                <div class="section-subtitle">Сделай эти шаги за час до созвона — займёт 20–30 минут</div>
+            </div>
+        </div>
+
+        <!-- STEP 1: Subscription — Full-width featured card -->
+        <div class="card card-warm reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num amber">01</div>
+                <div class="step-head-text">
+                    <h3>Оплати подписку Claude</h3>
+                    <p>Первый и самый важный шаг</p>
+                </div>
+            </div>
+
+            <p>Зайди на <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> и оформи подписку. Для начала хватит Pro ($20/мес), но для полного доступа к Claude Code лучше Max ($100/мес).</p>
+
+            <!-- Budget bento grid -->
+            <div class="budget-bento reveal-group">
+                <div class="budget-tile primary">
+                    <div>
+                        <div class="budget-amount" data-target="100" data-prefix="$">$0</div>
+                        <div class="budget-label">Claude Max — обязательно · больше лимиты на Opus 4.6</div>
+                    </div>
+                    <div class="budget-badge">Приоритет №1</div>
+                </div>
+                <div class="budget-tile amber-bg">
+                    <div class="budget-amount" data-target="20" data-prefix="$">$0</div>
+                    <div class="budget-label">ChatGPT Plus<br>(опционально)</div>
+                </div>
+                <div class="budget-tile terra-bg">
+                    <div class="budget-amount" data-target="6" data-prefix="~$">~$0</div>
+                    <div class="budget-label">VPS сервер<br>(позже)</div>
+                </div>
+                <div class="budget-tile forest-bg">
+                    <div class="budget-amount" data-target="30" data-prefix="$20–">$20–0</div>
+                    <div class="budget-label">OpenRouter для контента<br>(позже)</div>
+                </div>
+            </div>
+
+            <div class="callout callout-amber" style="margin-top:18px;">
+                <span class="callout-icon">💡</span>
+                <div class="callout-title">Почему Max, а не Pro?</div>
+                <p>Claude Max даёт значительно больше лимитов на Opus 4.6 — самую мощную модель. В CLI-версии это критично: агент может работать автономно часами, и лимиты Pro быстро заканчиваются. Для первой встречи Pro хватит, но на боевое использование бери Max.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2 + STEP 3 — bento 2-col -->
+        <div class="bento bento-1-2 reveal-group" style="margin-bottom:14px;">
+
+            <!-- Step 2 -->
+            <div class="card card-forest">
+                <div class="step-header">
+                    <div class="step-num forest">02</div>
+                    <div class="step-head-text">
+                        <h3>Установи Claude Code</h3>
+                        <p>Главный инструмент — терминальный AI-агент</p>
+                    </div>
+                </div>
+
+                <p>Это не просто чат. Claude Code — автономный агент: читает файлы, понимает контекст, пишет и запускает код, управляет Git, деплоит на серверы, подключается через MCP.</p>
+
+                <h4 style="margin-top:14px; font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-3);">Вариант A — Terminal (рекомендуется)</h4>
+
+                <div class="code-wrap">
+                    <div class="code-titlebar">
+                        <div class="code-dot cd-r"></div>
+                        <div class="code-dot cd-y"></div>
+                        <div class="code-dot cd-g"></div>
+                        <span class="code-file">Terminal</span>
+                    </div>
+                    <div class="code-block typing-anim">
+<span class="t-line typed-line"><span class="sy-comment"># macOS / Linux:</span></span>
+<span class="t-line typed-line"><span class="sy-cmd">curl</span> -fsSL <span class="sy-url">https://claude.ai/install.sh</span> | <span class="sy-cmd">bash</span></span>
+<span class="t-line typed-line">&nbsp;</span>
+<span class="t-line typed-line"><span class="sy-comment"># Или через Homebrew:</span></span>
+<span class="t-line typed-line"><span class="sy-cmd">brew</span> install <span class="sy-flag">--cask</span> claude-code</span>
+<span class="t-line typed-line"><span class="sy-cmd">claude</span></span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+
+                <div class="callout callout-terra" style="margin-top:10px;">
+                    <div class="callout-title">⚠️ Node.js больше не нужен</div>
+                    <p>Нативный установщик работает без зависимостей. macOS 13+ и 4 GB RAM.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="card card-sand">
+                <div class="step-header">
+                    <div class="step-num terra">03</div>
+                    <div class="step-head-text">
+                        <h3>Первый запуск — проверка</h3>
+                        <p>Убедись, что всё работает до встречи</p>
+                    </div>
+                </div>
+
+                <div class="code-wrap">
+                    <div class="code-titlebar">
+                        <div class="code-dot cd-r"></div>
+                        <div class="code-dot cd-y"></div>
+                        <div class="code-dot cd-g"></div>
+                        <span class="code-file">Terminal</span>
+                    </div>
+                    <div class="code-block">
+<span class="t-line"><span class="sy-comment"># Запусти из любой папки:</span></span>
+<span class="t-line"><span class="sy-cmd">claude</span></span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-comment"># При первом запуске — вход через</span></span>
+<span class="t-line"><span class="sy-comment"># браузер (claude.ai account)</span></span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-comment"># Напиши в чат:</span></span>
+<span class="t-line"><span class="sy-str">"Привет! Что ты умеешь?"</span></span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-ok">✓ Если Claude ответил — готово!</span></span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+
+                <p style="margin-top:12px;">Если ошибка — скинь скриншот Тиму перед встречей.</p>
+
+                <div class="callout callout-forest" style="margin-top:10px;">
+                    <span class="callout-icon">🤖</span>
+                    <div class="callout-title">Что умеет Claude Code?</div>
+                    <p>Думай о нём как о джуниоре, который работает 24/7 без перерывов. Сам читает файлы, понимает задачу, пишет код и проверяет результат.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4: Checklist — full width -->
+        <div class="card card-terra reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num terra">04</div>
+                <div class="step-head-text">
+                    <h3>Чеклист перед встречей</h3>
+                    <p>Убедись, что всё готово — отмечай по мере выполнения</p>
+                </div>
+            </div>
+
+            <div class="prog-wrap">
+                <div class="prog-track">
+                    <div class="prog-fill" id="progress-bar" style="width:0%"></div>
+                </div>
+                <div class="prog-label">
+                    <span class="prog-pct" id="prog-pct">0%</span>
+                    <span id="progress-label">0 из 5 выполнено</span>
+                </div>
+            </div>
+
+            <ul class="checklist" id="before-checklist">
+                <li onclick="toggleCheck(this, 'before')">
+                    <div class="chk-box"></div>
+                    <div class="chk-label">
+                        <div class="lbl">Подписка Claude оплачена</div>
+                        <div class="sub">Pro ($20) или Max ($100) на claude.ai</div>
+                    </div>
+                </li>
+                <li onclick="toggleCheck(this, 'before')">
+                    <div class="chk-box"></div>
+                    <div class="chk-label">
+                        <div class="lbl">Claude Code установлен</div>
+                        <div class="sub">Команда <code>claude</code> работает в терминале (или Desktop App скачан)</div>
+                    </div>
+                </li>
+                <li onclick="toggleCheck(this, 'before')">
+                    <div class="chk-box"></div>
+                    <div class="chk-label">
+                        <div class="lbl">Авторизация пройдена</div>
+                        <div class="sub">Claude отвечает на вопросы</div>
+                    </div>
+                </li>
+                <li onclick="toggleCheck(this, 'before')">
+                    <div class="chk-box"></div>
+                    <div class="chk-label">
+                        <div class="lbl">Описание задач подготовлено</div>
+                        <div class="sub">Какие процессы в ClickUp хочешь ускорить, какие боли чувствуешь</div>
+                    </div>
+                </li>
+                <li onclick="toggleCheck(this, 'before')">
+                    <div class="chk-box"></div>
+                    <div class="chk-label">
+                        <div class="lbl">«Точка Б» сформулирована</div>
+                        <div class="sub">Куда хочешь прийти через 1–2 месяца с помощью AI? Опиши своими словами</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div><!-- /before -->
+
+    <!-- ================================================================
+         SECTION 2: DURING
+    ================================================================ -->
+    <div id="during" class="section" role="tabpanel">
+
+        <div class="section-eyebrow reveal">
+            <div>
+                <div class="eyebrow-pill terra">Этап 2 · Во время встречи</div>
+                <div class="section-title" style="margin-top:8px;">Разбираем стэк и MCP</div>
+                <div class="section-subtitle">Как твои инструменты бьются с возможностями Claude — разберём вместе</div>
+            </div>
+        </div>
+
+        <!-- Stack mapping — full width dark card -->
+        <div class="card card-ink reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num white">📡</div>
+                <div class="step-head-text">
+                    <h3>Твой стэк + Claude</h3>
+                    <p>Как Claude усиливает инструменты, которые ты уже используешь</p>
+                </div>
+            </div>
+
+            <table class="stack-table">
+                <thead>
+                    <tr>
+                        <th>Твой инструмент</th>
+                        <th>Что добавляет Claude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">📋</span> ClickUp</div></td>
+                        <td>MCP-интеграция: читает/создаёт задачи, автоматизирует статусы, генерирует отчёты прямо из терминала</td>
+                    </tr>
+                    <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">✈️</span> Telegram</div></td>
+                        <td>Бот-автоматизация: мониторинг чатов, автоответы, аналитика каналов, интеграция с рабочими процессами</td>
+                    </tr>
+                    <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">📱</span> SMM (Вика)</div></td>
+                        <td>Генерация контента, адаптация под платформы, планирование постов, анализ конкурентов, автопостинг</td>
+                    </tr>
+                    <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">₿</span> Крипто-рынок</div></td>
+                        <td>Мониторинг цен, парсинг новостей, анализ сентимента, автоматические алерты, research-отчёты</td>
+                    </tr>
+                    <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">💼</span> BD / Продажи</div></td>
+                        <td>Автоматизация outreach, персонализация писем, CRM-интеграция, анализ лидов</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MCP concept + code — bento 2col -->
+        <div class="bento bento-2-1 reveal-group" style="margin-bottom:14px;">
+
+            <!-- MCP explanation card -->
+            <div class="card card-forest">
+                <div class="step-header">
+                    <div class="step-num forest">🔌</div>
+                    <div class="step-head-text">
+                        <h3>Что такое MCP</h3>
+                        <p>Model Context Protocol — «разъёмы» для Claude</p>
+                    </div>
+                </div>
+
+                <p>MCP — способ подключить Claude к внешним сервисам. Вместо того чтобы копировать данные руками, Claude сам заходит в ClickUp, Telegram, Google Sheets, браузер и работает с ними напрямую.</p>
+
+                <div class="callout callout-amber">
+                    <span class="callout-icon">📋</span>
+                    <div class="callout-title">Пример с ClickUp</div>
+                    <p>«Посмотри мои задачи на эту неделю и предложи приоритизацию». Claude через MCP подключается к ClickUp API, вытягивает задачи, анализирует и предлагает порядок.</p>
+                </div>
+
+                <div class="code-wrap" style="margin-top:14px;">
+                    <div class="code-titlebar">
+                        <div class="code-dot cd-r"></div>
+                        <div class="code-dot cd-y"></div>
+                        <div class="code-dot cd-g"></div>
+                        <span class="code-file">ClickUp MCP Setup</span>
+                    </div>
+                    <div class="code-block">
+<span class="t-line"><span class="sy-comment"># Подключить ClickUp MCP:</span></span>
+<span class="t-line"><span class="sy-cmd">claude</span> mcp add <span class="sy-flag">--transport</span> http <span class="sy-flag">--scope</span> user \</span>
+<span class="t-line">    clickup <span class="sy-url">https://mcp.clickup.com/mcp</span></span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-comment"># Авторизация через OAuth:</span></span>
+<span class="t-line"><span class="sy-cmd">/mcp</span></span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-ok"># Доступно на ВСЕХ тарифах ClickUp</span></span>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <!-- SMM example card (smaller) -->
+            <div class="card card-warm">
+                <div class="step-header">
+                    <div class="step-num amber">✍️</div>
+                    <div class="step-head-text">
+                        <h3>Пример для Вики (SMM)</h3>
+                        <p>Что AI делает за минуты</p>
+                    </div>
+                </div>
+
+                <p>«Напиши 5 постов для Twitter про новый продукт, адаптируй под LinkedIn, подготовь контент-план на неделю».</p>
+                <p>Claude генерирует всё за минуты — с учётом tone of voice и специфики каждой платформы.</p>
+
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
+                    <div class="tag tag-forest" style="width:fit-content;">✓ Twitter / X</div>
+                    <div class="tag tag-amber"  style="width:fit-content;">✓ LinkedIn</div>
+                    <div class="tag tag-terra"  style="width:fit-content;">✓ Telegram каналы</div>
+                    <div class="tag tag-sand"   style="width:fit-content;">✓ Instagram</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meeting agenda — timeline -->
+        <div class="card reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num amber">📍</div>
+                <div class="step-head-text">
+                    <h3>Что разберём на встрече</h3>
+                    <p>Программа созвона — можно отмечать по ходу</p>
+                </div>
+            </div>
+
+            <div class="timeline" id="during-checklist">
+                <div class="timeline-item" onclick="toggleTimelineItem(this)">
+                    <div class="timeline-dot" id="tl0">⚡</div>
+                    <div class="timeline-content">
+                        <div class="tl-title">Живая демонстрация Claude Code</div>
+                        <div class="tl-desc">Как работает автономный агент в терминале</div>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="toggleTimelineItem(this)">
+                    <div class="timeline-dot" id="tl1">🔌</div>
+                    <div class="timeline-content">
+                        <div class="tl-title">Подключим ClickUp через MCP</div>
+                        <div class="tl-desc">Настроим интеграцию прямо на встрече</div>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="toggleTimelineItem(this)">
+                    <div class="timeline-dot" id="tl2">🔍</div>
+                    <div class="timeline-content">
+                        <div class="tl-title">Разберём твои рабочие процессы</div>
+                        <div class="tl-desc">Найдём, что можно автоматизировать первым</div>
+                    </div>
+                </div>
+                <div class="timeline-item" onclick="toggleTimelineItem(this)">
+                    <div class="timeline-dot" id="tl3">₿</div>
+                    <div class="timeline-content">
+                        <div class="tl-title">Реальные кейсы из крипто-маркетинга</div>
+                        <div class="tl-desc">Как AI используется прямо сейчас</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /during -->
+
+    <!-- ================================================================
+         SECTION 3: AFTER
+    ================================================================ -->
+    <div id="after" class="section" role="tabpanel">
+
+        <div class="section-eyebrow reveal">
+            <div>
+                <div class="eyebrow-pill forest">Этап 3 · После встречи</div>
+                <div class="section-title" style="margin-top:8px;">Самостоятельное развитие</div>
+                <div class="section-subtitle">Следующие шаги для внедрения AI в ежедневную работу</div>
+            </div>
+        </div>
+
+        <!-- CLAUDE.md card -->
+        <div class="card card-warm reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num amber">📄</div>
+                <div class="step-head-text">
+                    <h3>Настрой CLAUDE.md</h3>
+                    <p>«Конституция» для твоего AI-агента</p>
+                </div>
+            </div>
+
+            <p>Это файл-инструкция, который Claude читает при каждом запуске. Туда записываются правила, стиль работы, контекст проекта. На встрече мы создадим твой первый CLAUDE.md.</p>
+
+            <div class="code-wrap">
+                <div class="code-titlebar">
+                    <div class="code-dot cd-r"></div>
+                    <div class="code-dot cd-y"></div>
+                    <div class="code-dot cd-g"></div>
+                    <span class="code-file">Создать CLAUDE.md</span>
+                </div>
+                <div class="code-block">
+<span class="t-line"><span class="sy-comment"># Создай файл в корне проекта:</span></span>
+<span class="t-line"><span class="sy-cmd">touch</span> CLAUDE.md</span>
+<span class="t-line">&nbsp;</span>
+<span class="t-line"><span class="sy-comment"># Что писать внутри:</span></span>
+<span class="t-line"><span class="sy-comment"># - Чем занимается компания</span></span>
+<span class="t-line"><span class="sy-comment"># - Какие инструменты используете</span></span>
+<span class="t-line"><span class="sy-comment"># - Стиль коммуникации и тон</span></span>
+<span class="t-line"><span class="sy-comment"># - Правила и ограничения для агента</span></span>
+                </div>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+        </div>
+
+        <!-- MCP servers table -->
+        <div class="card card-forest reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num forest">🌐</div>
+                <div class="step-head-text">
+                    <h3>Подключи MCP-серверы</h3>
+                    <p>Плановые интеграции после встречи</p>
+                </div>
+            </div>
+
+            <table class="mcp-table">
+                <thead>
+                    <tr>
+                        <th>Сервис</th>
+                        <th>Статус</th>
+                        <th>Приоритет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="tool-name">📋 ClickUp MCP</td>
+                        <td><span class="tag tag-forest">Официальный сервер</span></td>
+                        <td><span class="tag tag-forest">На встрече</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tool-name">✈️ Telegram MCP</td>
+                        <td><span class="tag tag-amber">После встречи</span></td>
+                        <td><span class="tag tag-forest">Высокий</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tool-name">🌐 Браузер (Playwright)</td>
+                        <td><span class="tag tag-amber">После встречи</span></td>
+                        <td><span class="tag tag-amber">Средний</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tool-name">📊 Google Sheets MCP</td>
+                        <td><span class="tag tag-sand">По необходимости</span></td>
+                        <td><span class="tag tag-amber">Средний</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Roadmap: 2 weeks -->
+        <div class="card reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num terra">🗺️</div>
+                <div class="step-head-text">
+                    <h3>Roadmap: первые 2 недели</h3>
+                    <p>Конкретный план действий</p>
+                </div>
+            </div>
+
+            <div class="roadmap-grid">
+                <div class="roadmap-week">
+                    <div class="week-label">Неделя 1 · Базовые навыки</div>
+                    <div class="week-task">Ежедневно используй Claude Code для рутинных задач</div>
+                    <div class="week-task">Привыкни к промптам — научись давать контекст</div>
+                    <div class="week-task">Автоматизируй один повторяющийся процесс (напр. еженедельный отчёт)</div>
+                </div>
+                <div class="roadmap-week">
+                    <div class="week-label">Неделя 2 · MCP-интеграции</div>
+                    <div class="week-task">Подключи ClickUp — управляй задачами через Claude</div>
+                    <div class="week-task">Подключи Telegram MCP для автоматизации переписок</div>
+                    <div class="week-task">Покажи Вике основы — онбординг по SMM-автоматизации</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deliverables — what you get -->
+        <div class="card card-terra reveal" style="margin-bottom:14px;">
+            <div class="step-header">
+                <div class="step-num terra">🎁</div>
+                <div class="step-head-text">
+                    <h3>Что ты получишь после встречи</h3>
+                    <p>Всё уже включено — ничего дополнительно покупать не надо</p>
+                </div>
+            </div>
+
+            <div class="deliverables-grid">
+                <div class="dlv-item">
+                    <div class="dlv-check"></div>
+                    <div class="dlv-text">Запись встречи</div>
+                </div>
+                <div class="dlv-item">
+                    <div class="dlv-check"></div>
+                    <div class="dlv-text">Персональный CLAUDE.md для твоей компании</div>
+                </div>
+                <div class="dlv-item">
+                    <div class="dlv-check"></div>
+                    <div class="dlv-text">Конфиг MCP-серверов</div>
+                </div>
+                <div class="dlv-item">
+                    <div class="dlv-check"></div>
+                    <div class="dlv-text">Доступ к Тиму в Telegram для вопросов</div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /after -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">Tim Zinin</div>
+        <p>Подготовлено для <strong>Славы</strong> &nbsp;·&nbsp; <a href="https://timzinin.com" target="_blank" rel="noopener">timzinin.com</a> &nbsp;·&nbsp; AI Consulting</p>
+    </footer>
+
+</div><!-- /container -->
+
+<script>
+    /* ================================================================
+       HERO TERMINAL TYPING ANIMATION
+    ================================================================ */
+    (function() {
+        const cmdEl = document.getElementById('hero-cmd');
+        const cursorEl = document.getElementById('hero-cursor');
+        const cursor2El = document.getElementById('hero-cursor2');
+        const promptOutEl = document.getElementById('hero-prompt-out');
+
+        const initCmd = 'claude';
+        const promptText = 'Покажи мои задачи в ClickUp на сегодня';
+
+        function typeText(el, text, speed, done) {
+            let i = 0;
+            el.textContent = '';
+            const interval = setInterval(() => {
+                el.textContent += text[i];
+                i++;
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    if (done) done();
+                }
+            }, speed);
+        }
+
+        function showLine(id, delay) {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.style.opacity = '1';
+            }, delay);
+        }
+
+        setTimeout(() => {
+            typeText(cmdEl, initCmd, 80, () => {
+                cursorEl.style.display = 'none';
+                showLine('hero-out1', 300);
+                showLine('hero-out2', 600);
+                showLine('hero-out3', 1000);
+                showLine('hero-out4', 1300);
+                showLine('hero-out5', 1600);
+
+                setTimeout(() => {
+                    document.getElementById('hero-out6').style.opacity = '1';
+                    typeText(promptOutEl, promptText, 45, () => {
+                        cursor2El.style.display = 'inline-block';
+                    });
+                }, 2200);
+            });
+        }, 1000);
+
+        document.getElementById('hero-out1').textContent = '> Connecting to Claude...';
+        document.getElementById('hero-out2').textContent = '> Loading MCP servers...';
+    })();
+
+    /* ================================================================
+       TAB SWITCHING
+    ================================================================ */
+    function showSection(id, btn) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+        });
+
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        const nav = document.querySelector('.tab-nav-wrap');
+        const top = nav.getBoundingClientRect().top + window.pageYOffset - 24;
+        window.scrollTo({ top, behavior: 'smooth' });
+
+        setTimeout(triggerReveal, 60);
+
+        // Trigger budget counter when showing "before"
+        if (id === 'before') {
+            setTimeout(animateBudgetCounters, 300);
+        }
+    }
+
+    /* ================================================================
+       COPY CODE
+    ================================================================ */
+    function copyCode(btn) {
+        const block = btn.closest('.code-wrap').querySelector('.code-block');
+        const text = block.innerText.trim();
+        navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 2200);
+        });
+    }
+
+    /* ================================================================
+       ANIMATED BUDGET COUNTERS
+    ================================================================ */
+    function animateBudgetCounters() {
+        document.querySelectorAll('.budget-amount[data-target]').forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            const prefix = el.getAttribute('data-prefix') || '';
+            const duration = 1200;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = prefix + current;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+
+            requestAnimationFrame(update);
+        });
+    }
+
+    /* ================================================================
+       CHECKLIST TOGGLE — with confetti on 100%
+    ================================================================ */
+    function toggleCheck(li, listId) {
+        const box = li.querySelector('.chk-box');
+        box.classList.toggle('checked');
+        li.classList.toggle('done', box.classList.contains('checked'));
+        persistChecks();
+        updateProgressBar();
+
+        // Check for 100% completion and fire confetti
+        const all = document.querySelectorAll('#before-checklist .chk-box');
+        const done = [...all].filter(b => b.classList.contains('checked')).length;
+        if (done === all.length) {
+            fireConfetti();
+        }
+    }
+
+    function toggleTimelineItem(item) {
+        const dot = item.querySelector('.timeline-dot');
+        item.classList.toggle('tl-done');
+        if (item.classList.contains('tl-done')) {
+            dot.style.background = 'var(--forest)';
+            dot.style.borderColor = 'var(--forest)';
+            dot.style.color = '#fff';
+            dot.textContent = '✓';
+        } else {
+            dot.style.background = '';
+            dot.style.borderColor = '';
+            dot.style.color = '';
+            dot.textContent = dot.getAttribute('data-orig') || '';
+        }
+        // Store original emoji
+        if (!dot.getAttribute('data-orig')) {
+            dot.setAttribute('data-orig', dot.textContent.trim() !== '✓' ? dot.textContent : '');
+        }
+        persistChecks();
+    }
+
+    function updateProgressBar() {
+        const bar = document.getElementById('progress-bar');
+        const label = document.getElementById('progress-label');
+        const pctEl = document.getElementById('prog-pct');
+        if (!bar) return;
+
+        const boxes = document.querySelectorAll('#before-checklist .chk-box');
+        const checked = [...boxes].filter(b => b.classList.contains('checked')).length;
+        const pct = Math.round(checked / boxes.length * 100);
+        bar.style.width = pct + '%';
+        label.textContent = checked + ' из ' + boxes.length + ' выполнено';
+        pctEl.textContent = pct + '%';
+    }
+
+    /* ================================================================
+       PERSIST CHECKS to localStorage
+    ================================================================ */
+    function persistChecks() {
+        const boxes = document.querySelectorAll('.chk-box:not(.pre-checked)');
+        boxes.forEach((b, i) => {
+            localStorage.setItem('chk-v2-' + i, b.classList.contains('checked'));
+        });
+    }
+
+    // Restore on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const boxes = document.querySelectorAll('.chk-box:not(.pre-checked)');
+        boxes.forEach((b, i) => {
+            if (localStorage.getItem('chk-v2-' + i) === 'true') {
+                b.classList.add('checked');
+                const li = b.closest('li');
+                if (li) li.classList.add('done');
+            }
+        });
+        updateProgressBar();
+        animateBudgetCounters();
+    });
+
+    /* ================================================================
+       CONFETTI
+    ================================================================ */
+    function fireConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = ['#f59e0b','#d97706','#c2410c','#ea580c','#2d6a4f','#40916c','#fcd34d','#fdba74'];
+        const particles = [];
+        const count = 120;
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: -20,
+                w: Math.random() * 10 + 5,
+                h: Math.random() * 6 + 3,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vx: (Math.random() - 0.5) * 6,
+                vy: Math.random() * 4 + 3,
+                rot: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 10,
+                opacity: 1
+            });
+        }
+
+        let frame = 0;
+        const maxFrames = 150;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.08;
+                p.rot += p.rotSpeed;
+                if (frame > maxFrames * 0.6) {
+                    p.opacity -= 0.015;
+                }
+                p.opacity = Math.max(0, p.opacity);
+
+                ctx.save();
+                ctx.globalAlpha = p.opacity;
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rot * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+            });
+
+            frame++;
+            if (frame < maxFrames) {
+                requestAnimationFrame(draw);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        draw();
+    }
+
+    /* ================================================================
+       SCROLL REVEAL
+    ================================================================ */
+    function triggerReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-group').forEach(el => {
+            if (!el.classList.contains('visible')) {
+                observer.observe(el);
+            }
+        });
+    }
+
+    triggerReveal();
+    document.addEventListener('DOMContentLoaded', () => setTimeout(triggerReveal, 80));
+</script>
+</body>
+</html>
