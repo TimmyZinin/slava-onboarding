@@ -975,6 +975,7 @@
         .stack-table tbody tr:nth-child(3) { animation-delay: 0.3s; }
         .stack-table tbody tr:nth-child(4) { animation-delay: 0.4s; }
         .stack-table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+        .stack-table tbody tr:nth-child(6) { animation-delay: 0.6s; }
 
         .stack-table td {
             padding: 13px 14px;
@@ -1885,8 +1886,12 @@
                         <td>MCP-интеграция: читает/создаёт задачи, автоматизирует статусы, генерирует отчёты прямо из терминала</td>
                     </tr>
                     <tr>
+                        <td><div class="tool-pill"><span class="tool-emoji">🔄</span> Circleback AI</div></td>
+                        <td>MCP-сервер: Claude читает итоги встреч, транскрипты, action items. Webhooks → автосоздание задач в ClickUp после каждого звонка</td>
+                    </tr>
+                    <tr>
                         <td><div class="tool-pill"><span class="tool-emoji">✈️</span> Telegram</div></td>
-                        <td>Бот-автоматизация: мониторинг чатов, автоответы, аналитика каналов, интеграция с рабочими процессами</td>
+                        <td>Голосовые → текст (Whisper) → структурированные задачи в ClickUp. Мониторинг чатов, автоответы, аналитика</td>
                     </tr>
                     <tr>
                         <td><div class="tool-pill"><span class="tool-emoji">📱</span> SMM (Вика)</div></td>
@@ -1937,10 +1942,12 @@
 <span class="t-line"><span class="sy-cmd">claude</span> mcp add <span class="sy-flag">--transport</span> http <span class="sy-flag">--scope</span> user \</span>
 <span class="t-line">    clickup <span class="sy-url">https://mcp.clickup.com/mcp</span></span>
 <span class="t-line">&nbsp;</span>
-<span class="t-line"><span class="sy-comment"># Авторизация через OAuth:</span></span>
-<span class="t-line"><span class="sy-cmd">/mcp</span></span>
+<span class="t-line"><span class="sy-comment"># Подключить Circleback MCP:</span></span>
+<span class="t-line"><span class="sy-cmd">claude</span> mcp add <span class="sy-flag">--transport</span> http \</span>
+<span class="t-line">    circleback <span class="sy-url">https://app.circleback.ai/api/mcp</span></span>
 <span class="t-line">&nbsp;</span>
-<span class="t-line"><span class="sy-ok"># Доступно на ВСЕХ тарифах ClickUp</span></span>
+<span class="t-line"><span class="sy-comment"># Авторизация обоих через OAuth:</span></span>
+<span class="t-line"><span class="sy-cmd">/mcp</span></span>
                     </div>
                     <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                 </div>
@@ -2079,6 +2086,11 @@
                 <tbody>
                     <tr>
                         <td class="tool-name">📋 ClickUp MCP</td>
+                        <td><span class="tag tag-forest">Официальный сервер</span></td>
+                        <td><span class="tag tag-forest">На встрече</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tool-name">🔄 Circleback MCP</td>
                         <td><span class="tag tag-forest">Официальный сервер</span></td>
                         <td><span class="tag tag-forest">На встрече</span></td>
                     </tr>
